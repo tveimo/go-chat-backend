@@ -12,23 +12,18 @@ go_run:
 	@echo "\n....Running $(GO_PROJECT_NAME)...."
 	CLIENT_ID=user@domain.org CLIENT_SECRET=mypassword ./bin/$(GO_PROJECT_NAME)
 
-go_test:
-	@echo "\n....Running tests for $(GO_PROJECT_NAME)...."
-	go test
-
 # Project rules
 build:
 	$(MAKE) go_dep_install
 	$(MAKE) go_build
 
 test:
-	go get github.com/stretchr/testify/assert
-	UNIT_TESTING=true CLIENT_ID=admin CLIENT_SECRET=mypassword go test -v
+	UNIT_TESTING=true CLIENT_ID=admin CLIENT_SECRET=mypassword go test -v -p 1
 	rm -rf unit-test.sqlite
 
 test-ff:
 	go get github.com/stretchr/testify/assert
-	UNIT_TESTING=true CLIENT_ID=admin CLIENT_SECRET=mypassword go test -v --failfast
+	UNIT_TESTING=true CLIENT_ID=admin CLIENT_SECRET=mypassword go test -v -p 1 --failfast
 
 run:
 ifeq ($(ENV), dev)
