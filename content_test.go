@@ -8,6 +8,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
@@ -19,10 +20,16 @@ var TestChannels = []content.Channel{
 // test new user registration
 func TestNewChannels(t *testing.T) {
 
+	// run these tests with the unittest user
+	if os.Getenv("CLIENT_ID") == "" || os.Getenv("CLIENT_SECRET") == "" {
+		slog.Debug("need to run NewChannels tests with CLIENT_ID & CLIENT_SECRET specified in environment")
+		return
+	}
+
 	for _, v := range TestChannels {
 
-		// sign in as first test user
-		oauthToken, err := OAUTHsignin(TestUsers[0].Email, TestUsers[0].Password)
+		// sign in as unittest user
+		oauthToken, err := OAUTHsignin(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"))
 		assert.NoError(t, err, "unable to authenticate")
 
 		type Resp struct {

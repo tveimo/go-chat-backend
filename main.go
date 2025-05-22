@@ -6,7 +6,6 @@ import (
 	"areo/go-chat-backend/email"
 	"areo/go-chat-backend/media"
 	"areo/go-chat-backend/messaging"
-	"areo/go-chat-backend/server"
 	"areo/go-chat-backend/users"
 	"areo/go-chat-backend/utils"
 	"context"
@@ -20,7 +19,6 @@ import (
 	"github.com/oxtoacart/bpool"
 	slogchi "github.com/samber/slog-chi"
 	"github.com/zknill/slogmw"
-	"golang.org/x/crypto/bcrypt"
 	"html/template"
 	"log/slog"
 	"net/http"
@@ -291,48 +289,9 @@ func initEnvironment() *slog.Logger {
 		oauthSecret = "thisISmeantTObeSECURE"
 	}
 
-	if os.Getenv("UNIT_TESTING") != "" {
-		// Drop tables
-		//db.DropTableIfExists(&OAUTHUser{}, "oauth_users")
-		// Append Users
-		//db.DropTableIfExists(&User{}, Groups{}, Orders{})
-	}
-
 	if os.Getenv("MYSQL_DSN") == "" {
 		slog.Info("Checking schema in DB (sqlite)")
-		//db.CreateTable(&User{})
 	}
 
-	//db.CreateTable(&User{}, Groups{}, Orders{})
-	//db.AutoMigrate(&User{}, Groups{}, Orders{})
-
-	if os.Getenv("CLIENT_ID") != "" && os.Getenv("CLIENT_SECRET") != "" {
-
-		slog.Info("Querying user", slog.String("Client_ID", os.Getenv("CLIENT_ID")))
-		var user users.User
-		server.DB.Where("email = ?", os.Getenv("CLIENT_ID")).First(&user)
-
-		// If no user exists, add.
-		if user.ID.String() == "" {
-			slog.Info("Querying new user", slog.String("Client_ID", os.Getenv("CLIENT_ID")))
-			user.Email = os.Getenv("CLIENT_ID")
-
-			passBcrypt, err := bcrypt.GenerateFromPassword([]byte(os.Getenv("CLIENT_SECRET")), 8)
-
-			if err != nil {
-				slog.Warn("Bcrypt failed", slog.Any("error", err))
-			}
-
-			// Insert the bcrypt password
-			user.Password = string(passBcrypt)
-
-			// Toggle the isAdmin user mode on
-			//user.Groups = []Groups{Groups{ZoneName: "isAdmin"}}
-
-			//user.AddManual()
-			//db.Create(&defaultUser)
-		}
-
-	}
 	return logger
 }

@@ -216,7 +216,7 @@ func serveImage(w http.ResponseWriter, r *http.Request, user users.User) {
 
 func InitSchema() {
 
-	slog.Info("setting up User schema")
+	slog.Info("setting up Media schema")
 
 	// Users schema
 	//database.DB.CreateTable(&Media{})

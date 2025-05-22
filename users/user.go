@@ -14,6 +14,7 @@ import (
 	"log/slog"
 	"math"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -467,4 +468,28 @@ func InitSchema() {
 	// https://gorm.io/docs/migration.html
 	server.DB.AutoMigrate(&Keyword{})
 	server.DB.AutoMigrate(&UserRef{})
+
+	if os.Getenv("CLIENT_ID") != "" && os.Getenv("CLIENT_SECRET") != "" {
+
+		slog.Info("Querying user", slog.String("email", os.Getenv("CLIENT_ID")))
+		var defaultUser User
+		server.DB.Where("email = ?", os.Getenv("CLIENT_ID")).First(&defaultUser)
+		if defaultUser.Email == "" {
+			slog.Info("Creating unit test user", slog.String("Client_ID", os.Getenv("CLIENT_ID")))
+			defaultUser.Email = os.Getenv("CLIENT_ID")
+
+			passBcrypt, err := bcrypt.GenerateFromPassword([]byte(os.Getenv("CLIENT_SECRET")), 8)
+
+			if err != nil {
+				slog.Warn("Bcrypt failed", slog.Any("error", err))
+			}
+
+			defaultUser.Password = string(passBcrypt)
+
+			err = server.DB.Create(&defaultUser).Error
+			if err != nil {
+				slog.Error("unable to create unit test user", slog.String("email", defaultUser.Email), slog.Any("err", err))
+			}
+		}
+	}
 }
