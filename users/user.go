@@ -459,16 +459,12 @@ func GetKeywords(w http.ResponseWriter, r *http.Request) {
 func InitSchema() {
 
 	slog.Info("setting up User schema")
-	//database.DB.CreateTable(&User{})
 	server.DB.AutoMigrate(&User{})
 
 	slog.Info("setting up Group schema")
-	//database.DB.CreateTable(&Group{})
-
 	server.DB.AutoMigrate(&Group{})
 
 	// https://gorm.io/docs/migration.html
-	//server.DB.Migrator().RenameColumn(&Keyword{}, "name", "tag")
 	server.DB.AutoMigrate(&Keyword{})
 	server.DB.AutoMigrate(&UserRef{})
 }

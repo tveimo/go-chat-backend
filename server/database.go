@@ -29,9 +29,9 @@ func initDB() (db *gorm.DB) {
 		var dbPath string
 
 		if os.Getenv("UNIT_TESTING") != "" {
-			dbPath = "./unit-test.db"
+			dbPath = "./unit-test.sqlite"
 		} else {
-			dbPath = "./test.db"
+			dbPath = "./test.sqlite"
 		}
 
 		l2 := gorm_logrus.New()

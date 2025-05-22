@@ -38,6 +38,7 @@ func TestNewChannels(t *testing.T) {
 		req, _ := http.NewRequest("POST", "/api/v1/channels/new", bytes.NewBuffer(jsonValue))
 
 		req.Header.Set("Authorization", oauthToken)
+		req.Header.Set("Content-Type", "application/json")
 
 		router.ServeHTTP(w, req)
 

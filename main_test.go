@@ -47,10 +47,9 @@ func OAUTHsignin(id, secret string) (oauthToken string, err error) {
 	w := httptest.NewRecorder()
 
 	formData := url.Values{
-		"client_id":     {id},
-		"client_secret": {secret},
-		"grant_type":    {"client_credentials"},
-		//"grant_type":    {"password"},
+		"username":   {id},
+		"password":   {secret},
+		"grant_type": {"password"},
 	}
 
 	req, _ := http.NewRequest("POST", "/oauth2/token", strings.NewReader(formData.Encode()))
@@ -77,7 +76,7 @@ func OAUTHsignin(id, secret string) (oauthToken string, err error) {
 	return fmt.Sprintf("Bearer %s", respJSON.AccessToken), err
 }
 
-// This method verifies the signup topken at https://hostname/oauth2/verify and returns the bearer token to
+// This method verifies the signup token at https://hostname/oauth2/verify and returns the bearer token to
 // use with subsequent calls.
 func OAUTHverify(registrationToken string) (oauthToken string, err error) {
 
@@ -137,7 +136,7 @@ func TestMain(m *testing.M) {
 
 	code := m.Run()
 
-	// should clear out unit-test.db before exiting
+	// should clear out unit-test.sqlite before exiting
 	os.Exit(code)
 }
 
@@ -223,7 +222,12 @@ func TestUpdateUsers(t *testing.T) {
 
 		// try without authenticating
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("POST", "/api/v1/user", bytes.NewBuffer(jsonValue))
+		req, err := http.NewRequest("POST", "/api/v1/user", bytes.NewBuffer(jsonValue))
+
+		if err != nil {
+			slog.Error("unable to create request", slog.Any("err", err))
+		}
+		req.Header.Set("Content-Type", "application/json")
 
 		//log.Printf("using headers: %v", req.Header.Values("Authorization"))
 		router.ServeHTTP(w, req)
@@ -256,8 +260,13 @@ func createUserRequest(email string, password string) *http.Request {
 
 	jsonValue, _ := json.Marshal(registration)
 
+	slog.Debug("creating user with data", slog.String("user data", string(jsonValue)))
 	// signup requires no prior authentication
-	req, _ := http.NewRequest("POST", "/api/v1/register", bytes.NewBuffer(jsonValue))
+	req, err := http.NewRequest("POST", "/api/v1/register", bytes.NewBuffer(jsonValue))
 
+	if err != nil {
+		slog.Error("unable to create request", slog.Any("err", err))
+	}
+	req.Header.Set("Content-Type", "application/json")
 	return req
 }

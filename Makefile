@@ -24,7 +24,7 @@ build:
 test:
 	go get github.com/stretchr/testify/assert
 	UNIT_TESTING=true CLIENT_ID=admin CLIENT_SECRET=mypassword go test -v
-	rm -rf unit-test.db
+	rm -rf unit-test.sqlite
 
 test-ff:
 	go get github.com/stretchr/testify/assert
@@ -40,8 +40,8 @@ else
 endif
 
 clean:
-	rm -rf test.db
-	rm -rf unit-test.db
+	rm -rf test.sqlite
+	rm -rf unit-test.sqlite
 	rm -rf ./pkg/*
 	rm -rf ./bin/*
 
