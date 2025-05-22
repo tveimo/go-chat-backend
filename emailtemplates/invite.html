@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+
+</head>
+
+<body>
+    <h1>Invitation to Join Network Group</h1>
+        
+    <p>Hello, {{.user.GetTitle}} is Inviting you, {{.Email}} to Join a Network Group.</p>
+    
+    <p>
+        To register your own user account, follow the link
+        <a href='{{.URL}}'>{{.URL}}?email={{.EmailEncoded}}</a>
+    </p>
+
+    <p>No account has been created for you yet, and you can ignore this email if
+        you don't want to create one, and none will be created.</p>
+
+</body>
+
+</html>

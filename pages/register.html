@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>{{template "head.html" . }}</head>
+  <body>
+    <h1>Signup</h1>
+    <div class="p-4"><a href="/">back</a></div>
+    <form action="/signin/authenticate" method="post" accept-charset="UTF-8" role="form">
+      <div>
+        <div class="fg">
+          <label for="username">username <span class="req">*</span></label>
+          <div class="iw">
+            <input id="username" type="text" name="username" placeholder="email">
+          </div>
+        </div>
+
+        <div class="fg">
+          <label for="password">password <span class="req">*</span></label>
+          <div class='iw'>
+            <input id="password" class="form-control" type="password" name="password" placeholder="password">
+          </div>
+        </div>
+      </div>
+      <div class="">
+        <a class="" href="/password/form">forgotten password</a>
+        <input type="submit" class="btn" value="Signin">
+      </div>
+    </form>
+
+    <!-- see https://flowbite.com/blocks/marketing/login/ -->
+    <section class=".section">
+      <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+          <img class="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo">Flowbite</a>
+        <div class="card w-full md:mt-0 sm:max-w-md xl:p-0">
+
+          <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 class="h1">Sign in to your account</h1>
+            <form class="eform" action="/signin/authenticate" method="post" accept-charset="UTF-8" role="form">
+              <div>
+                <label for="email" class="label">Your email</label>
+                <input type="email" name="email" id="email" class="input" required="true">
+              </div>
+              <div>
+                <label for="password" class="label">Password</label>
+                <input type="password" name="password" id="password" class="input" required="true">
+              </div>
+              <div class="flex items-center justify-between">
+                <div class="flex items-start"></div>
+                <a href="#" class="link">Forgot password?</a>
+              </div>
+              <button type="submit" class="btn align-right">Sign in</button>
+              <p class="text">Don’t have an account yet? <a href="#" class="link">Sign up</a>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </body>
+
+</html>
