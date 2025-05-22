@@ -247,6 +247,7 @@ func TestBadAuth(t *testing.T) {
 
 	router.ServeHTTP(w, req)
 
+	slog.Debug("response", slog.String("body", w.Body.String()))
 	assert.Equal(t, 401, w.Code)
 }
 
