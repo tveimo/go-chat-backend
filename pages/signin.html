@@ -1,9 +1,7 @@
 <!doctype html>
 <html>
   <head>{{template "head.html" . }}</head>
-  <!--{{ .title }}-->
   <body>
-    <!-- see https://flowbite.com/blocks/marketing/login/ -->
     <section class=".section">
       <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div class="card w-full md:mt-0 sm:max-w-md xl:p-0">
@@ -16,15 +14,15 @@
                 <input id="username" type="email" name="username" placeholder="email" class="input" required="true">
               </div>
               <div>
-                <label for="password" class="label">Password</label>
+                <label for="password" class="label">password</label>
                 <input id="password" type="password" name="password" placeholder="password" class="input" required="true">
               </div>
               <div class="flex items-center justify-between">
                 <div class="flex items-start"></div>
                 <a class="link" href="/password/form">forgotten password</a>
               </div>
-              <button type="submit" class="btn align-right">Sign in</button>
-              <p class="text">Don’t have an account yet? <a href="#" class="link">Sign up</a>
+              <button type="submit" class="btn align-right">sign in</button>
+              <p class="text">Don’t have an account yet? <a href="/register" class="link">Sign up</a>
               </p>
             </form>
           </div>

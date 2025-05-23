@@ -163,6 +163,7 @@ func main() {
 
 	r2.Get("/", account.HomePage)
 	r2.Get("/signin", account.SigninPage)
+	r2.Get("/register", account.SignupPage)
 
 	slog.Info("Launching Host HTTP", slog.String("hostPort", hostPort))
 	err := http.ListenAndServe(":"+hostPort, r2)
