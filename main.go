@@ -164,7 +164,7 @@ func main() {
 	r2.Get("/", account.HomePage)
 	r2.Get("/signin", account.SigninPage)
 
-	slog.Info("Launching Host HTTP", slog.String("hostPort", apiPort))
+	slog.Info("Launching Host HTTP", slog.String("hostPort", hostPort))
 	err := http.ListenAndServe(":"+hostPort, r2)
 	if err != nil {
 		panic(err)
